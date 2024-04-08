@@ -1,0 +1,125 @@
+.banner {
+  height: 285px;
+  /* 添加背景 */
+  background-image: url("http://p1.music.126.net/46ndGxWXUQ0B55ZwLmJjOw==/109951169441600065.jpg?imageView&blur=40x20");
+  /* 让其处于中心位置 */
+  background-position: center center;
+  /* 将图片放大，也就是让两边更加模糊 */
+  background-size: 6000px;
+}
+.content {
+  position: relative;
+  /* 作为flex container开启弹性布局，目的是为了让left和right排列在一行 */
+  display: flex;
+  width: 982px;
+  /* 上下外边距为0，左右自适应，也就是让它自动居中 */
+  margin: 0 auto;
+}
+.content .left {
+  position: relative;
+  height: 285px;
+  width: 730px;
+}
+.content .right {
+  height: 285px;
+  width: 254px;
+}
+.content .left .piclist {
+  display: flex;
+  overflow: hidden;
+}
+.content .left .piclist .pic {
+  position: absolute;
+}
+.pic img {
+  /* 调整图片大小 */
+  width: 730px;
+}
+.content .right {
+  background-image: url("https://s2.music.126.net/style/web2/img/index/download.png?2f10520d45bef3da37e3cb71f538202e");
+}
+.content .right a {
+  /* 将这个a标签改为块级元素从而可以设置其宽高 */
+  display: block;
+  /* 设置宽高及外边距是为了将这个a标签与背景图中的下载客户端贴合 */
+  width: 215px;
+  height: 56px;
+  margin: 186px 0 0 19px;
+  /* 让文字消失 */
+  text-indent: -9999px;
+}
+.content .right a:hover {
+  background-image: url("https://s2.music.126.net/style/web2/img/index/download.png?2f10520d45bef3da37e3cb71f538202e");
+  background-position: 0 63px;
+}
+.content .right p {
+  font-size: 12px;
+  color: #8d8d8d;
+  margin: 10px auto;
+  /* 居中 */
+  text-align: center;
+}
+.content .left .slick-dots {
+  /* 浮动布局，让所有li元素在一行排列 */
+  display: flex;
+  /* 绝对定位后，让其偏移到相应位置（注意绝对定位是相对的，要先设置其父元素为相对定位 */
+  position: absolute;
+  /* 距离left底部5px */
+  bottom: 5px;
+  /* 居中 */
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  /* 上面那个居中是dotlist这个列表相对于left的居中，这里的center是dotlist的子元素相对于dotlist居中 */
+  justify-content: center;
+  /* 让小圆点处于最上面的一层 */
+  z-index: 1000;
+}
+.slick-dots li button {
+  /* 将a标签转换成块级元素，从而可以设置宽高 */
+  display: block;
+  /* 设置每个小圆点的边距 */
+  margin: 0 2px !important;
+  width: 20px !important;
+  height: 20px !important;
+  /* 给每个a标签换一个背景图，这个背景图就是白色小圆点 */
+  background: url(https://s2.music.126.net/style/web2/img/index/banner.png?98d02a5a0c2200771f5680f2764cd69e) 3px -343px !important;
+  background-position: 3px -343px !important;
+  transition: none !important;
+}
+.slick-dots li.slick-active button,
+.slick-dots li.slick-active button:hover {
+  background-position: -16px -343px !important;
+}
+.content .button {
+  /* 变成块级元素 */
+  display: block;
+  width: 37px;
+  height: 63px;
+  /* 绝对定位，使其定位到相应的位置，同时设置content为相对定位 */
+  position: absolute;
+  /* 居中显示 */
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+}
+.content .left-btn {
+  /* 让它到content的外面去 */
+  left: -68px;
+  background: url(https://s2.music.126.net/style/web2/img/index/banner.png?98d02a5a0c2200771f5680f2764cd69e) 0 9999px no-repeat;
+  background-position: 0 -360px;
+}
+.content .right-btn {
+  right: -68px;
+  background: url(https://s2.music.126.net/style/web2/img/index/banner.png?98d02a5a0c2200771f5680f2764cd69e) 0 9999px no-repeat;
+  background-position: 0 -508px;
+}
+.up {
+  /* 设置z-index的元素一定要进行定位才行，默认值static也是不生效的 */
+  z-index: 100;
+}
+:where(.css-dev-only-do-not-override-42nv3w).ant-carousel .slick-dots li {
+  width: initial;
+  height: auto;
+  transition: none !important;
+}
