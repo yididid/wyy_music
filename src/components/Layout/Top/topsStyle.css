@@ -40,6 +40,11 @@
   text-decoration: none;
   color: #fff;
 }
+.m-top .wrap a.active li {
+  background: #000;
+  text-decoration: none;
+  color: #fff;
+}
 .m-top .wrap .s-fc3 {
   margin-left: 20px;
 }

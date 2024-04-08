@@ -33,6 +33,10 @@ const routes = [
       {
         path: '/follow',
         element: lazyLoad(<FollowMusic />)
+      },
+      {
+        path: '/follow',
+        element: lazyLoad(<FollowMusic />)
       }
     ]
   },
@@ -46,7 +50,7 @@ const routes = [
   },
   {
     path: "*",
-    element: <Navigate to="/FindMusic" />
+    element: <Navigate to="/" />
   }
 ]
 

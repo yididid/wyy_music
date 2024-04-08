@@ -14,10 +14,10 @@ function Top () {
           <NavLink to="/find"><li><span>发现音乐</span></li></NavLink>
           <NavLink to="/my"><li><span>我的音乐</span></li></NavLink>
           <NavLink to="/follow"><li><span>关注</span></li></NavLink>
-          <NavLink to="/my"><li><span>商城</span></li></NavLink>
-          <NavLink to="/my"><li><span>音乐人</span></li></NavLink>
-          <NavLink to="/my"><li><span>云推歌</span></li></NavLink>
-          <NavLink to="/my"><li><span>下载客户端</span></li></NavLink>
+          <NavLink to="/sc"><li><span>商城</span></li></NavLink>
+          <NavLink to="/yy"><li><span>音乐人</span></li></NavLink>
+          <NavLink to="/yt"><li><span>云推歌</span></li></NavLink>
+          <NavLink to="/x"><li><span>下载客户端</span></li></NavLink>
         </ul>
         <div className='s_box'>
           <input type="text" placeholder='音乐/视频/电台/用户' />

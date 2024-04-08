@@ -1,8 +1,12 @@
 import { useRef } from 'react';
-import { Carousel } from 'antd';
+import { Carousel, Modal } from 'antd';
 import './bannersStyle.less'
 import { useState } from 'react';
 function Banner () {
+    const [visiable, setVisiable] = useState(false);//是否弹窗提示
+    const [visiableUrl, setVisiableUrl] = useState('');//弹窗提示内容
+
+
     const [currentIndex, setCuttentIndex] = useState(0)
     const bannerRef = useRef();
 
@@ -47,31 +51,55 @@ function Banner () {
         },
     };
 
+    function handlebannerClick (url) {
+        setVisiableUrl(url)
+        setVisiable(true)
+    }
+    const onOk = () => {//弹窗点击OK按钮
+        console.log("编写自己的onOk逻辑");
+        closeModal();
+    };
+    const closeModal = () => {//弹窗点击关闭按钮
+        setVisiable(false);
+    };
+
     return (
-        <div className="banner" style={{ background: `url('${baImageUrl}') center center / 6000px` }}>
-            <div className="content">
-                <div className="left">
-                    <Carousel autoplay effect='fade' beforeChange={handlafterChange} ref={bannerRef}>
-                        {
-                            banners.map(item => {
-                                return (
-                                    <div className='item' key={item}>
-                                        <a href="#" className="pic">
-                                            <img src={item}></img>
-                                        </a>
-                                    </div>
-                                )
-                            })
-                        }
-                    </Carousel>
+        <div>
+            <div className="banner" style={{ background: `url('${baImageUrl}') center center / 6000px` }}>
+                <div className="content">
+                    <div className="left">
+                        <Carousel autoplay effect='fade' beforeChange={handlafterChange} ref={bannerRef}>
+                            {
+                                banners.map((item, index) => {
+                                    return (
+                                        <div className='item' key={item} onClick={() => handlebannerClick(item)}>
+                                            <a href="#" className="pic">
+                                                <img src={item}></img>
+                                            </a>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </Carousel>
+                    </div>
+                    <div className="right">
+                        <a href="#">下载客户端</a>
+                        <p>PC 安卓 iPhone WP iPad Mac 六大客户端</p>
+                    </div>
+                    <a href="#" className="button left-btn" onClick={handlePrevClick}></a>
+                    <a href="#" className="button right-btn" onClick={handleNextClick}></a>
                 </div>
-                <div className="right">
-                    <a href="#">下载客户端</a>
-                    <p>PC 安卓 iPhone WP iPad Mac 六大客户端</p>
-                </div>
-                <a href="#" className="button left-btn" onClick={handlePrevClick}></a>
-                <a href="#" className="button right-btn" onClick={handleNextClick}></a>
             </div>
+            <Modal
+                title="温馨提示"
+                open={visiable}
+                onOk={onOk}
+                onCancel={closeModal}
+                afterClose={closeModal}
+            >
+                <p>暂无跳转路径</p>
+                <p>{visiableUrl}</p>
+            </Modal>
         </div>
     )
 }

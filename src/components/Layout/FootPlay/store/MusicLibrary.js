@@ -41,7 +41,7 @@ const DataSong = [{
     "pic": 109951164179134667,
     "src": "/static/mp3/8023.mp3"
   },
-  "dt": 269815,
+  "dt": 295732,
 },
 {
   "id": 440613,
@@ -56,7 +56,7 @@ const DataSong = [{
     "pic": 109951164179134667,
     "src": "/static/mp3/440613.aac"
   },
-  "dt": 295732,
+  "dt": 223515,
 },
 {
   "id": 21766869,
@@ -95,7 +95,7 @@ const DataSong = [{
   "al": {
     "id": 16949,
     "name": "粤语Beyond - 海阔天空",
-    "picUrl": "https://bodianimgcdn.kuwo.cn/images/e8f1e7efe37427b767d8d1b8711a3939.jpg",
+    "picUrl": "https://img3.kuwo.cn/star/starheads/120/47/68/3668920800.jpg",
     "tns": [],
     "pic_str": "109951164179134667",
     "pic": 109951164179134667,

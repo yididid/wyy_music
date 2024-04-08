@@ -364,11 +364,11 @@
 .m-playbar .words .by a {
   color: #9b9b9b;
 }
-:where(.css-dev-only-do-not-override-42nv3w).ant-slider {
+.m-pbar :where(.css-dev-only-do-not-override-42nv3w).ant-slider {
   padding: 0;
   margin: 0;
 }
-:where(.css-dev-only-do-not-override-42nv3w).ant-slider .ant-slider-handle::after {
+.m-pbar :where(.css-dev-only-do-not-override-42nv3w).ant-slider .ant-slider-handle::after {
   box-shadow: initial;
   border-radius: initial;
   position: absolute;
@@ -381,21 +381,21 @@
   background: url(https://s2.music.126.net/style/web2/img/iconall.png?eafad7d22db0887dca6502c92c06f8c4) no-repeat;
   background-position: 0 -250px;
 }
-:where(.css-dev-only-do-not-override-42nv3w).ant-slider .ant-slider-rail {
+.m-pbar :where(.css-dev-only-do-not-override-42nv3w).ant-slider .ant-slider-rail {
   background: url(https://s2.music.126.net/style/web2/img/frame/statbar.png?cdcae31ed2cb6128c931a79bce7edac5) no-repeat;
 }
-:where(.css-dev-only-do-not-override-42nv3w).ant-slider-horizontal .ant-slider-rail {
+.m-pbar :where(.css-dev-only-do-not-override-42nv3w).ant-slider-horizontal .ant-slider-rail {
   height: 9px;
 }
-:where(.css-dev-only-do-not-override-42nv3w).ant-slider .ant-slider-track {
+.m-pbar :where(.css-dev-only-do-not-override-42nv3w).ant-slider .ant-slider-track {
   background: url(https://s2.music.126.net/style/web2/img/frame/statbar.png?cdcae31ed2cb6128c931a79bce7edac5) no-repeat;
   background-position: left -66px;
 }
-:where(.css-dev-only-do-not-override-42nv3w).ant-slider-horizontal .ant-slider-track,
+.m-pbar :where(.css-dev-only-do-not-override-42nv3w).ant-slider-horizontal .ant-slider-track,
 :where(.css-dev-only-do-not-override-42nv3w).ant-slider-horizontal .ant-slider-tracks {
   height: 9px;
 }
-:where(.css-dev-only-do-not-override-42nv3w).ant-slider .ant-slider-handle:hover::after,
+.m-pbar :where(.css-dev-only-do-not-override-42nv3w).ant-slider .ant-slider-handle:hover::after,
 :where(.css-dev-only-do-not-override-42nv3w).ant-slider .ant-slider-handle:active::after,
 :where(.css-dev-only-do-not-override-42nv3w).ant-slider .ant-slider-handle:focus::after {
   width: initial;
@@ -440,4 +440,62 @@
   background: #000;
   text-decoration: none;
   color: #fff;
+}
+.m-vol .barbg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 32px;
+  height: 113px;
+  background-position: 0 -503px;
+}
+.m-vol .vbg,
+.m-vol .curr {
+  position: absolute;
+  top: 11px;
+  left: 14px;
+  width: 4px;
+  height: 93px;
+}
+.m-vol .ant-slider {
+  position: absolute;
+  left: 11px;
+}
+.m-vol :where(.css-dev-only-do-not-override-42nv3w).ant-slider-vertical {
+  margin: 0;
+}
+.m-vol :where(.css-dev-only-do-not-override-42nv3w).ant-slider .ant-slider-handle::after {
+  box-shadow: initial;
+  border-radius: initial;
+  position: absolute;
+  top: -7px;
+  right: -13px;
+  width: 22px;
+  height: 24px;
+  margin-left: -6px;
+  _background-position: 0 0;
+  background: url(https://s2.music.126.net/style/web2/img/iconall.png?eafad7d22db0887dca6502c92c06f8c4) no-repeat;
+  background-position: 0 -250px;
+}
+.m-vol :where(.css-dev-only-do-not-override-42nv3w).ant-slider .ant-slider-handle:hover::after,
+:where(.css-dev-only-do-not-override-42nv3w).ant-slider .ant-slider-handle:active::after,
+:where(.css-dev-only-do-not-override-42nv3w).ant-slider .ant-slider-handle:focus::after {
+  width: initial;
+  height: initial;
+  inset-inline-start: initial;
+  inset-block-start: initial;
+  box-shadow: initial;
+  border-radius: initial;
+  position: absolute;
+  top: -7px;
+  right: -6px;
+  width: 22px;
+  height: 24px;
+  margin-left: -5px;
+  _background-position: 0 0;
+  background: url(https://s2.music.126.net/style/web2/img/iconall.png?eafad7d22db0887dca6502c92c06f8c4) no-repeat;
+  background-position: 0 -250px;
+}
+.m-playbar .icn-volno {
+  background-position: -104px -69px;
 }

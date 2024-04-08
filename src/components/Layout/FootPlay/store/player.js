@@ -7,7 +7,8 @@ const initialStatedata = {//初始化
     ...DataSong
   ],
   playSongIndex: 0,//当前播放playSongList的index
-  playSongRule: 'loop'//播放规则。默认循环loop  单曲one 随机shuffle
+  playSongRule: 'loop',//播放规则。默认循环loop  单曲one 随机shuffle
+  playSongVolume: 0.2,//播放音量
 }
 
 const playerSlice = createSlice({
@@ -25,8 +26,11 @@ const playerSlice = createSlice({
     },
     changePlaySongRuleAction (state, { payload }) {
       state.playSongRule = payload
+    },
+    changePlaySongVolumeAction (state, { payload }) {
+      state.playSongVolume = payload
     }
   }
 })
-export const { changeCurrentSongAction, changePlaySongIndexAction, changePlaySongListAction, changePlaySongRuleAction } = playerSlice.actions;
+export const { changeCurrentSongAction, changePlaySongIndexAction, changePlaySongListAction, changePlaySongRuleAction, changePlaySongVolumeAction } = playerSlice.actions;
 export default playerSlice.reducer

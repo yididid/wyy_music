@@ -1,28 +1,43 @@
 import './mainsStyle.less'
 import MusicLibrary from '../../Layout/FootPlay/store/MusicLibrary'
+import React, { useState } from 'react';
 import { changeCurrentSongAction, changePlaySongIndexAction, changePlaySongListAction, changePlaySongRuleAction } from '../../Layout/FootPlay/store/player'
 import { connect, useSelector, useDispatch } from 'react-redux'
 function Main () {
-  var MusicLibrary_new = MusicLibrary
+  const [filter, setFilter] = useState('');
+
   const dispatch = useDispatch();//调用react-redux的reducers里面方法
   function handleaddBtnClick (type = '', id) {
+    var DataSongfindIndex = 0;
+    var PlaySongList = {};
+    var CurrentSong = {};
+    var PlaySongIndex = 0;
     if (type == 'once') {//单曲
-      var DataSongfindIndex = MusicLibrary.findIndex((item) => item.id === id)
-      dispatch(changePlaySongListAction([MusicLibrary[DataSongfindIndex]]))
-      dispatch(changeCurrentSongAction(MusicLibrary[DataSongfindIndex]))
-      dispatch(changePlaySongIndexAction(DataSongfindIndex))
+      DataSongfindIndex = MusicLibrary.findIndex((item) => item.id === id)
+      PlaySongList = [MusicLibrary[DataSongfindIndex]]
+      CurrentSong = MusicLibrary[DataSongfindIndex]
+      PlaySongIndex = DataSongfindIndex
     }
     if (type == 'all') {//所有歌曲
-      dispatch(changePlaySongListAction(MusicLibrary))
-      dispatch(changePlaySongIndexAction(0))
-      dispatch(changeCurrentSongAction(MusicLibrary[0]))
+      PlaySongList = MusicLibrary
+      PlaySongIndex = 0;
+      CurrentSong = MusicLibrary[0]
     }
+    if (type == 'filter') {
+      PlaySongIndex = 0;
+      PlaySongList = filteredData
+      CurrentSong = filteredData[0]
+    }
+    dispatch(changePlaySongListAction(PlaySongList))
+    dispatch(changeCurrentSongAction(CurrentSong))
+    dispatch(changePlaySongIndexAction(PlaySongIndex))
   }
 
-  function handleScreenBtnClick () {//点击筛选
-
+  function handleScreenBtnClick (keyword) {//点击筛选
+    setFilter(keyword);
   }
 
+  const filteredData = MusicLibrary.filter((item) => item.name.includes(filter));
 
 
 
@@ -32,23 +47,23 @@ function Main () {
         <div className='floor_hot'>
           <div className='n-rcmd'>
             <div className='v-hd2'>
-              <div className="tit f-ff2 f-tdn" id="recommend_title" onClick={() => handleaddBtnClick('all')}>所有音乐</div>
+              <div className="tit f-ff2 f-tdn" id="recommend_title" onClick={() => handleScreenBtnClick('')}>所有音乐</div>
               <div className="tab">
-                <a className="s-fc3">许嵩</a>
+                <a className="s-fc3" onClick={() => handleScreenBtnClick('许嵩')}>许嵩</a>
                 <span className="line">|</span>
-                <a className="s-fc3">周杰伦</a>
+                <a className="s-fc3" onClick={() => handleScreenBtnClick('周杰伦')}>周杰伦</a>
                 <span className="line">|</span>
-                <a className="s-fc3">Beyond</a>
+                <a className="s-fc3" onClick={() => handleScreenBtnClick('Beyond')}>Beyond</a>
                 <span className="line">|</span>
-                <a className="s-fc3">Beyond</a>
+                <a className="s-fc3" onClick={() => handleScreenBtnClick('Beyond')}>Beyond</a>
                 <span className="line">|</span>
-                <a className="s-fc3">Beyond</a>
+                <a className="s-fc3" onClick={() => handleScreenBtnClick('Beyond')}>Beyond</a>
               </div>
-              <span className="more"><div className="s-fc3">更多</div><i className="cor s-bg s-bg-6">&nbsp;</i></span>
+              <span className="more" onClick={() => handleaddBtnClick('filter')}><div className="s-fc3">播放</div><i className="cor s-bg s-bg-6">&nbsp;</i></span>
             </div>
             <ul className="m-cvrlst f-cb">
               {
-                MusicLibrary_new.map((item, index) => {
+                filteredData.map((item, index) => {
                   return (
                     <li key={'MusicLibrary_new' + index}>
                       <div className="u-cover u-cover-1" onClick={() => handleaddBtnClick('once', item.id)}>
@@ -79,51 +94,33 @@ function Main () {
           <div className="n-singer">
             <h3 className="v-hd3">
               <span className="f-fl">入驻歌手</span>
-              <a href="/discover/artist/signed/" className="more s-fc3">查看全部 &gt;</a>
+              <a href="#" className="more s-fc3">查看全部 &gt;</a>
             </h3>
             <ul className="n-enter f-cb" id="singer-list">
-              <li>
-                <a href="/user/home?id=29879272" className="itm f-tdn">
-                  <div className="head"><img className="j-img" src="http://p1.music.126.net/cSAmmAvsKhm3N-zxWg7QcQ==/109951168490195225.jpg?param=62y62"></img></div>
+              <li onClick={() => handleScreenBtnClick('许嵩')}>
+                <a href="#" className="itm f-tdn">
+                  <div className="head"><img className="j-img" src="https://img1.kuwo.cn/star/starheads/120/54/7/152082279.jpg"></img></div>
                   <div className="ifo">
-                    <h4><span className="nm f-fs1 f-ib f-thide">张惠妹aMEI</span></h4>
-                    <p className="f-thide s-fc3">台湾歌手张惠妹</p>
+                    <h4><span className="nm f-fs1 f-ib f-thide">许嵩</span></h4>
+                    <p className="f-thide s-fc3">90年代情歌</p>
                   </div>
                 </a>
               </li>
-              <li>
-                <a href="/user/home?id=650120" className="itm f-tdn">
-                  <div className="head"><img className="j-img" src="http://p1.music.126.net/TQZGbxp-xnJla-q7ii9z0A==/1364493985498917.jpg?param=62y62"></img></div>
+              <li onClick={() => handleScreenBtnClick('周杰伦')}>
+                <a href="#" className="itm f-tdn">
+                  <div className="head"><img className="j-img" src="https://img4.kuwo.cn/star/albumcover/700/72/44/3648126291.jpg"></img></div>
                   <div className="ifo">
-                    <h4><span className="nm f-fs1 f-ib f-thide">吴莫愁Momo</span></h4>
-                    <p className="f-thide s-fc3">《中国好声音》选手吴莫愁</p>
+                    <h4><span className="nm f-fs1 f-ib f-thide">周杰伦</span></h4>
+                    <p className="f-thide s-fc3">华语顶梁支柱</p>
                   </div>
                 </a>
               </li>
-              <li>
-                <a href="/user/home?id=198554" className="itm f-tdn">
-                  <div className="head"><img className="j-img" src="http://p1.music.126.net/whG7pbsbd1akKtOE7V3R_Q==/109951168299161319.jpg?param=62y62"></img></div>
+              <li onClick={() => handleScreenBtnClick('Beyond')}>
+                <a href="#" className="itm f-tdn">
+                  <div className="head"><img className="j-img" src="https://img3.kuwo.cn/star/starheads/120/47/68/3668920800.jpg"></img></div>
                   <div className="ifo">
-                    <h4><span className="nm f-fs1 f-ib f-thide">孙楠</span></h4>
-                    <p className="f-thide s-fc3">歌手孙楠 代表作《你快回来》《燃烧》</p>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/user/home?id=2000268" className="itm f-tdn">
-                  <div className="head"><img className="j-img" src="http://p1.music.126.net/1GIlkxKmvKu66ufU83FyvA==/31885837222663.jpg?param=62y62"></img></div>
-                  <div className="ifo">
-                    <h4><span className="nm f-fs1 f-ib f-thide">麦田老狼</span></h4>
-                    <p className="f-thide s-fc3">歌手，音乐人。代表作《同桌的你》等。</p>
-                  </div>
-                </a>
-              </li>
-              <li>
-                <a href="/user/home?id=39002" className="itm f-tdn">
-                  <div className="head"><img className="j-img" src="http://p1.music.126.net/MXMZYksJmsa0gcGkuk2mDQ==/109951167712155407.jpg?param=62y62"></img></div>
-                  <div className="ifo">
-                    <h4><span className="nm f-fs1 f-ib f-thide">陈楚生</span></h4>
-                    <p className="f-thide s-fc3">唱作歌手</p>
+                    <h4><span className="nm f-fs1 f-ib f-thide">Beyond</span></h4>
+                    <p className="f-thide s-fc3">摇滚乐队之父，获得无数奖</p>
                   </div>
                 </a>
               </li>

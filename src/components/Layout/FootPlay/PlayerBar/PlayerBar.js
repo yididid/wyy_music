@@ -5,26 +5,29 @@ import { useEffect, useRef, useState } from 'react';
 import { connect, useSelector, useDispatch } from 'react-redux'
 import { Slider } from 'antd';
 import DataSong from '../store/MusicLibrary'
-import { changeCurrentSongAction, changePlaySongIndexAction, changePlaySongListAction, changePlaySongRuleAction } from '../store/player'
+import { changeCurrentSongAction, changePlaySongIndexAction, changePlaySongListAction, changePlaySongRuleAction, changePlaySongVolumeAction } from '../store/player'
 function FootPlay () {
   const [isPlaying, setIsPlaying] = useState(false);//是否播放状态
   const [progress, setProgress] = useState(0);//播放进度条
   const [duration, setDuration] = useState(0);//音乐总时长
   const [currentTime, setCurrentTime] = useState(0);//播放时间
+  const [upvolume, setupVolume] = useState(false);//是否设置音乐
 
   const dispatch = useDispatch();//调用react-redux的reducers里面方法
   const audioRef = useRef(null);
 
-  const { currentSong, playSongList, playSongIndex, playSongRule } = useSelector((state) => ({/**从redux仓库里面获得数据 */
+  const { currentSong, playSongList, playSongIndex, playSongRule, playSongVolume } = useSelector((state) => ({/**从redux仓库里面获得数据 */
     currentSong: state.player.currentSong,
     playSongList: state.player.playSongList,
     playSongIndex: state.player.playSongIndex,
     playSongRule: state.player.playSongRule,
+    playSongVolume: state.player.playSongVolume,
   }));
 
   useEffect(() => { //代替原有的类组件声明周期
     // audioRef.current.src = getSongPlayUrl(currentSong.id)
     audioRef.current.src = currentSong.al.src;
+    audioRef.current.volume = playSongVolume;
     audioRef.current?.play().then(() => {
       setIsPlaying(true)
       console.log("播放歌曲成功！")
@@ -125,6 +128,15 @@ function FootPlay () {
     isPlaying ? audioRef.current?.play().catch(() => setIsPlaying(false)) : audioRef.current?.pause()
   }
 
+  function SliderVolumeChanged (value) {//音量拖动设置大小
+    dispatch(changePlaySongVolumeAction(value / 100))
+    audioRef.current.volume = value / 100;
+  }
+
+  function handleVolumeBtnClick () {//是否设置音乐
+    setupVolume(!upvolume)
+  }
+
   return (
     <div className="g-btmbar">
       <div className="m-playbar m-playbar-lock" id="auto-id-MlgyMrpoPkCPw8Sy">
@@ -168,12 +180,22 @@ function FootPlay () {
             <a href="#" hidefocus="true" data-action="share" className="icn icn-share" title="分享">分享</a>
           </div>
           <div className="ctrl f-fl f-pr j-flag">
-            <div className="m-vol" id="auto-id-T14tuTJDkfHf9gKf">
-              <div className="barbg"></div>
-              <div className="vbg j-t" id="auto-id-1Ek41prB7nTpBCgD"><div className="curr j-t"></div>
-                <span className="btn f-alpha j-t"></span></div>
-            </div>
-            <a href="#" hidefocus="true" data-action="volume" className="icn icn-vol"></a>
+            {upvolume ?
+              <div className="m-vol" id="auto-id-T14tuTJDkfHf9gKf">
+                <div className="barbg"></div>
+                <Slider vertical defaultValue={playSongVolume * 100}
+                  styles={{
+                    track: {
+                      background: '#C10D0C',
+                    },
+                  }}
+                  tooltip={{ formatter: null }}
+                  onChange={SliderVolumeChanged}
+                ></Slider>
+              </div>
+              : null
+            }
+            <a href="#" hidefocus="true" data-action="volume" className={playSongVolume === 0 ? 'icn icn-volno' : 'icn icn-vol'} onClick={handleVolumeBtnClick}></a>
             <a href="#" hidefocus="true" data-action="mode" className={"icn icn-" + playSongRule} title="循环" onClick={handleRuleBtnClick}></a>
             <span className="add f-pr">
               <span className="tip">已添加到播放列表</span>
