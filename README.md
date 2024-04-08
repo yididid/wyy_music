@@ -1,4 +1,3 @@
-![image](https://github.com/yididid/wyy_music/assets/56509940/87805069-9d4e-4e32-9c6a-77bf83c35fff)React-Music
 一、简介
 该项目是基于React全家桶开发的一个音乐播放器，技术栈采用：Webpack + React + React-redux + React-router+toolkit + Node + Sass + Es6 + Localstorage+ Css3+antd，参考网易云音乐，在此感谢网易云音乐音乐！项目涉及的知识点非常广泛，基于react全家桶技术都有使用，原创独立开发精品之作，具有很好的参考价值！
 
