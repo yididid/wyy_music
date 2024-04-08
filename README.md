@@ -27,17 +27,27 @@ react-router: "^4.2.0",
 
 
 2、该音乐播放器基本功能：
+
+轮播图切换
+
 暂停音乐|播放音乐
+
 下一首、上一首
+
 点击进度播放或拖动滚动条进度播放
+
 页面路由顶部切换
+
 音量控制大小
+
 播放规格：单曲循环、列表循环、随机循环
 
 
 
 3、项目图预览：
 ![1712561438319](https://github.com/yididid/wyy_music/assets/56509940/8e315bd5-433d-4acf-bfba-6a1e03e3aee0)
+
+![image](https://github.com/yididid/wyy_music/assets/56509940/777d778f-355d-4084-9420-a73d2a12ea77)
 
 
 
