@@ -56,23 +56,6 @@ function Main () {
                   )
                 })
               }
-
-              <li>
-                <div className="u-cover u-cover-1">
-                  <img src="http://p1.music.126.net/3RANMlMM-udSsHyInyVbrQ==/528865105234307.jpg?param=140y140"></img>
-                  <a title="[声线] 空 灵 女 声" href="/playlist?id=123243715" className="msk" data-res-id="123243715" data-res-type="13" data-res-action="log" data-res-data="recommendclick|0|alg_high_quality|user-playlist"></a>
-                  <div className="bottom">
-                    <a className="icon-play f-fr" title="播放" href="#" data-res-type="13" data-res-id="123243715" data-res-action="play"></a>
-                    <span className="icon-headset"></span>
-                    <span className="nb">2592万</span>
-                  </div>
-                </div>
-                <p className="dec">
-                  <a title="[声线] 空 灵 女 声" className="tit s-fc0" href="/playlist?id=123243715" data-res-id="123243715" data-res-type="13" data-res-action="log" data-res-data="recommendclick|0|alg_high_quality|user-playlist">
-                    [声线] 空 灵 女 声
-                  </a>
-                </p>
-              </li>
             </ul>
           </div>
         </div>
