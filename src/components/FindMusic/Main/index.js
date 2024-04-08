@@ -3,13 +3,26 @@ import MusicLibrary from '../../Layout/FootPlay/store/MusicLibrary'
 import { changeCurrentSongAction, changePlaySongIndexAction, changePlaySongListAction, changePlaySongRuleAction } from '../../Layout/FootPlay/store/player'
 import { connect, useSelector, useDispatch } from 'react-redux'
 function Main () {
+  var MusicLibrary_new = MusicLibrary
   const dispatch = useDispatch();//调用react-redux的reducers里面方法
-  function handleaddBtnClick (id) {
-    var DataSongfindIndex = MusicLibrary.findIndex((item) => item.id === id)
-    dispatch(changePlaySongListAction([MusicLibrary[DataSongfindIndex]]))
-    dispatch(changeCurrentSongAction(MusicLibrary[DataSongfindIndex]))
-    dispatch(changePlaySongIndexAction(DataSongfindIndex))
+  function handleaddBtnClick (type = '', id) {
+    if (type == 'once') {//单曲
+      var DataSongfindIndex = MusicLibrary.findIndex((item) => item.id === id)
+      dispatch(changePlaySongListAction([MusicLibrary[DataSongfindIndex]]))
+      dispatch(changeCurrentSongAction(MusicLibrary[DataSongfindIndex]))
+      dispatch(changePlaySongIndexAction(DataSongfindIndex))
+    }
+    if (type == 'all') {//所有歌曲
+      dispatch(changePlaySongListAction(MusicLibrary))
+      dispatch(changePlaySongIndexAction(0))
+      dispatch(changeCurrentSongAction(MusicLibrary[0]))
+    }
   }
+
+  function handleScreenBtnClick () {//点击筛选
+
+  }
+
 
 
 
@@ -19,26 +32,26 @@ function Main () {
         <div className='floor_hot'>
           <div className='n-rcmd'>
             <div className='v-hd2'>
-              <a href="/discover/playlist/" className="tit f-ff2 f-tdn" id="recommend_title">所有音乐</a>
+              <div className="tit f-ff2 f-tdn" id="recommend_title" onClick={() => handleaddBtnClick('all')}>所有音乐</div>
               <div className="tab">
-                <a href="/discover/playlist/?cat=%E5%8D%8E%E8%AF%AD" className="s-fc3">华语</a>
+                <a className="s-fc3">许嵩</a>
                 <span className="line">|</span>
-                <a href="/discover/playlist/?cat=%E6%B5%81%E8%A1%8C" className="s-fc3">流行</a>
+                <a className="s-fc3">周杰伦</a>
                 <span className="line">|</span>
-                <a href="/discover/playlist/?cat=%E6%91%87%E6%BB%9A" className="s-fc3">摇滚</a>
+                <a className="s-fc3">Beyond</a>
                 <span className="line">|</span>
-                <a href="/discover/playlist/?cat=%E6%B0%91%E8%B0%A3" className="s-fc3">民谣</a>
+                <a className="s-fc3">Beyond</a>
                 <span className="line">|</span>
-                <a href="/discover/playlist/?cat=%E7%94%B5%E5%AD%90" className="s-fc3">电子</a>
+                <a className="s-fc3">Beyond</a>
               </div>
-              <span className="more"><a href="/discover/playlist/" className="s-fc3">更多</a><i className="cor s-bg s-bg-6">&nbsp;</i></span>
+              <span className="more"><div className="s-fc3">更多</div><i className="cor s-bg s-bg-6">&nbsp;</i></span>
             </div>
             <ul className="m-cvrlst f-cb">
               {
-                MusicLibrary.map((item, index) => {
+                MusicLibrary_new.map((item, index) => {
                   return (
-                    <li key={'MusicLibrary' + index}>
-                      <div className="u-cover u-cover-1" onClick={(event) => handleaddBtnClick(item.id)}>
+                    <li key={'MusicLibrary_new' + index}>
+                      <div className="u-cover u-cover-1" onClick={() => handleaddBtnClick('once', item.id)}>
                         <img src={item.al.picUrl}></img>
                         <a title={'[精选]' + item.name} href="/playlist?id=123243715" className="msk" data-res-id="123243715" data-res-type="13" data-res-action="log" data-res-data="recommendclick|0|alg_high_quality|user-playlist"></a>
                         <div className="bottom">

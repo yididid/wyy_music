@@ -183,7 +183,7 @@ function FootPlay () {
           </div>
         </div>
       </div>
-      <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onEnded={handleAudioEnded}></audio>
+      <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onEnded={() => handleAudioEnded('next')}></audio>
     </div>
   )
 }

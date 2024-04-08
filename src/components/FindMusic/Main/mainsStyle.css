@@ -20,6 +20,7 @@
   font-size: 20px;
   font-weight: normal;
   line-height: 28px;
+  cursor: pointer;
 }
 .f-tdn,
 .f-tdn:hover {
@@ -356,6 +357,7 @@ a.s-fc0:hover {
 .s-fc3,
 a.s-fc3:hover {
   color: #666;
+  cursor: pointer;
 }
 .u-cover-1 img {
   width: 100%;
