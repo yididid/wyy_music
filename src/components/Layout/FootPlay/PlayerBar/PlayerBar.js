@@ -12,6 +12,7 @@ function FootPlay () {
   const [duration, setDuration] = useState(0);//音乐总时长
   const [currentTime, setCurrentTime] = useState(0);//播放时间
   const [upvolume, setupVolume] = useState(false);//是否设置音乐
+  const [songlistshow, setSongListShow] = useState(false);//在播列表
 
   const dispatch = useDispatch();//调用react-redux的reducers里面方法
   const audioRef = useRef(null);
@@ -136,6 +137,9 @@ function FootPlay () {
   function handleVolumeBtnClick () {//是否设置音乐
     setupVolume(!upvolume)
   }
+  function handleSongListShowBtnClick () {//是否展开在播列表
+    setSongListShow(!songlistshow)
+  }
 
   return (
     <div className="g-btmbar">
@@ -197,13 +201,82 @@ function FootPlay () {
             }
             <a href="#" hidefocus="true" data-action="volume" className={playSongVolume === 0 ? 'icn icn-volno' : 'icn icn-vol'} onClick={handleVolumeBtnClick}></a>
             <a href="#" hidefocus="true" data-action="mode" className={"icn icn-" + playSongRule} title="循环" onClick={handleRuleBtnClick}></a>
-            <span className="add f-pr">
+            <span className="add f-pr" onClick={handleSongListShowBtnClick}>
               <span className="tip">已添加到播放列表</span>
               <a href="#" title="播放列表" hidefocus="true" data-action="panel" className="icn icn-list s-fc3">{playSongList.length}</a>
             </span>
             <div className="tip tip-1">循环</div>
           </div>
         </div>
+        {songlistshow ?
+          <div className="list" id="g_playlist">
+            <div className="listhd">
+              <div className="listhdc">
+                <h4>播放列表(<span className="j-flag">{playSongList.length}</span>)</h4>
+                <a href="#" className="addall" data-action="likeall">
+                  <span className="ico ico-add"></span>
+                  收藏全部
+                </a>
+                <span className="line"></span>
+                <a href="#" className="clear" data-action="clear">
+                  <span className="ico icn-del"></span>清除</a>
+                <p className="lytit f-ff0 f-thide j-flag">被选择的那个</p>
+                <span className="close" data-action="close">关闭</span>
+              </div>
+            </div>
+            <div className="listbd">
+
+              <div className="msk"></div>
+              <div className="listbdc j-flag" id="auto-id-2zi49UtL3kXXoECv">
+                <ul className="f-cb">
+                  {
+                    playSongList.map((item, index) => {
+                      return (
+                        <li className="z-sel" key={'playSongList' + index} onClick={() => playSongNow(item.id)}>
+                          <div className="col col-1">
+                            {playSongIndex == index ?
+                              <div className="playicn"></div>
+                              : null
+                            }
+
+                          </div><div className="col col-2">{item.al.name}</div>
+                          <div className="col col-3"><div className="icns">
+                            <i className="ico icn-del" title="删除" data-id="2137784754" data-action="delete">删除</i>
+                            <i className="ico ico-dl" title="下载" data-id="2137784754" data-action="download">下载</i>
+                            <i className="ico ico-share" title="分享" data-id="2137784754" data-action="share">分享</i>
+                            <i className="j-t ico ico-add" title="收藏" data-id="2137784754" data-action="like">收藏</i>
+                          </div>
+                          </div>
+                          <div className="col col-4">
+                            <span title="苏梦迪">
+                              <a className="" href="#" hidefocus="true">{item.name}</a>
+                            </span>
+                          </div>
+                          <div className="col col-5">03:56</div>
+                          <div className="col col-6">
+                            <a href="#" className="ico ico-src" title="来自歌单" data-action="link">
+                              来源</a>
+                          </div>
+                        </li>
+                      )
+                    })
+                  }
+                </ul>
+              </div>
+              <div className="bline j-flag" id="auto-id-wDk9zdTNDIL2vPNc"><span className="scrol" hidefocus="true"></span></div>
+              <div className="ask j-flag" id="auto-id-cKPqkmVST1hTWiAk">
+                <a className="ico ico-ask"></a>
+              </div>
+              <div className="msk2"></div>
+              <div className="listlyric j-flag" id="auto-id-OUrsNApnQQ3XoT78"> <p className="j-flag" data-time="0">作词 : 区恒</p><p className="j-flag" data-time="1">作曲 : 邢树杰</p><p className="j-flag" data-time="16.77">从陌生到手牵着</p><p className="j-flag" data-time="23.37">我误认找到对的那个</p><p className="j-flag" data-time="28.62">可后来爱过也难避免错过</p><p className="j-flag" data-time="35.04">相遇难得却无可奈何</p><p className="j-flag" data-time="42.78">我不是无可替代的</p><p className="j-flag" data-time="49.2">只是你寂寞时的选择</p><p className="j-flag" data-time="54.54">经不起波折你提前下车</p><p className="j-flag" data-time="61.05">得到只是一句我们不适合</p></div>
+              <div className="bline bline-1 j-flag" id="auto-id-koz6Ne58PM28BQJA">
+                <span className="scrol scrol-1 j-flag" hidefocus="true" id="auto-id-qAFPorBllinc2DVw"></span>
+              </div>
+            </div>
+          </div>
+          : null
+        }
+
       </div>
       <audio ref={audioRef} onTimeUpdate={handleTimeUpdate} onEnded={() => handleAudioEnded('next')}></audio>
     </div>
