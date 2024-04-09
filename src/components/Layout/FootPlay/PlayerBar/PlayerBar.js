@@ -27,7 +27,7 @@ function FootPlay () {
 
   useEffect(() => { //代替原有的类组件声明周期
     // audioRef.current.src = getSongPlayUrl(currentSong.id)
-    audioRef.current.src = currentSong.al.src;
+    audioRef.current.src = currentSong?.al?.src;
     audioRef.current.volume = playSongVolume;
     audioRef.current?.play().then(() => {
       setIsPlaying(true)
@@ -66,7 +66,6 @@ function FootPlay () {
   }
 
   function handleAudioEnded (value) {//音乐播放完 上一首/下一首
-    console.log('音频播放完成');
     if (playSongRule == 'loop') {//循环播放
       var nextPlaySongIndex = playSongIndex;
       if (value == 'next') {
@@ -123,7 +122,6 @@ function FootPlay () {
     dispatch(changeCurrentSongAction(newCurrentSong))
     dispatch(changePlaySongIndexAction(playSongListfindIndex))
 
-
     setDuration(newCurrentSong?.dt || 0)//将总时间赋值
     audioRef.current.src = newCurrentSong?.al?.src || '';
     isPlaying ? audioRef.current?.play().catch(() => setIsPlaying(false)) : audioRef.current?.pause()
@@ -139,6 +137,33 @@ function FootPlay () {
   }
   function handleSongListShowBtnClick () {//是否展开在播列表
     setSongListShow(!songlistshow)
+  }
+
+  function handleManagePlaySongList (e) {//管理播放列表，增删
+    const type = e.target.getAttribute('data-type')
+    if (type == 'deleteAll') {//清空
+      dispatch(changePlaySongListAction([]))
+      dispatch(changeCurrentSongAction({}))
+      dispatch(changePlaySongIndexAction(-1))
+    }
+
+    if (type == 'deleteOne') {//删除一首歌
+      const id = e.target.getAttribute('data-id')
+
+      var playSongListdata = [...playSongList];
+
+      const playSongListfindIndex = playSongListdata.findIndex((item) => item.id == id)
+      playSongListdata.splice(playSongListfindIndex, 1);
+      if (playSongIndex == playSongListfindIndex) {
+        handleAudioEnded('next')
+      }
+      dispatch(changePlaySongListAction(playSongListdata))
+    }
+    return false
+  }
+
+  function nostop (e) {//防止冒泡
+    e.stopPropagation();
   }
 
   return (
@@ -157,7 +182,10 @@ function FootPlay () {
             <a href="#" hidefocus="true" data-action="next" className="nxt" title="下一首(ctrl+→)" onClick={() => handleAudioEnded('next')}>下一首</a>
           </div>
           <div className="head j-flag">
-            <img src={currentSong.al?.picUrl}></img>
+            {currentSong.al ?
+              <img src={currentSong.al?.picUrl}></img>
+              : null
+            }
             <a href="#" hidefocus="true" className="mask"></a>
           </div>
           <div className="play">
@@ -218,7 +246,7 @@ function FootPlay () {
                   收藏全部
                 </a>
                 <span className="line"></span>
-                <a href="#" className="clear" data-action="clear">
+                <a href="#" className="clear" data-action="clear" data-type='deleteAll' onClick={handleManagePlaySongList}>
                   <span className="ico icn-del"></span>清除</a>
                 <p className="lytit f-ff0 f-thide j-flag">被选择的那个</p>
                 <span className="close" data-action="close">关闭</span>
@@ -240,12 +268,13 @@ function FootPlay () {
                             }
 
                           </div><div className="col col-2">{item.al.name}</div>
-                          <div className="col col-3"><div className="icns">
-                            <i className="ico icn-del" title="删除" data-id="2137784754" data-action="delete">删除</i>
-                            <i className="ico ico-dl" title="下载" data-id="2137784754" data-action="download">下载</i>
-                            <i className="ico ico-share" title="分享" data-id="2137784754" data-action="share">分享</i>
-                            <i className="j-t ico ico-add" title="收藏" data-id="2137784754" data-action="like">收藏</i>
-                          </div>
+                          <div className="col col-3" onClick={nostop}>
+                            <div className="icns">
+                              <i className="ico icn-del" title="删除" data-id={item.id} data-type="deleteOne" onClick={handleManagePlaySongList}>删除</i>
+                              <i className="ico ico-dl" title="下载" data-id={item.id} data-action="download">下载</i>
+                              <i className="ico ico-share" title="分享" data-id={item.id} data-action="share">分享</i>
+                              <i className="j-t ico ico-add" title="收藏" data-id={item.id} data-action="like">收藏</i>
+                            </div>
                           </div>
                           <div className="col col-4">
                             <span title="苏梦迪">

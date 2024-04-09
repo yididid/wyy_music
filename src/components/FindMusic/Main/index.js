@@ -1,48 +1,86 @@
 import './mainsStyle.less'
 import MusicLibrary from '../../Layout/FootPlay/store/MusicLibrary'
+import { message } from 'antd';
 import React, { useState } from 'react';
 import { changeCurrentSongAction, changePlaySongIndexAction, changePlaySongListAction, changePlaySongRuleAction } from '../../Layout/FootPlay/store/player'
 import { connect, useSelector, useDispatch } from 'react-redux'
 function Main () {
+
+  const { playSongList } = useSelector((state) => ({/**从redux仓库里面获得数据 */
+    playSongList: state.player.playSongList,
+  }));
+
   const [filter, setFilter] = useState('');
+  const [messageApi, contextHolder] = message.useMessage();
 
   const dispatch = useDispatch();//调用react-redux的reducers里面方法
-  function handleaddBtnClick (type = '', id) {
+
+  function handleaddBtnClick (e) {
+    const type = e.target.getAttribute('data-type')
+    const id = parseInt(e.target.getAttribute('data-id'))
     var DataSongfindIndex = 0;
-    var PlaySongList = {};
+    var newPlaySongList = {};
     var CurrentSong = {};
     var PlaySongIndex = 0;
     if (type == 'once') {//单曲
       DataSongfindIndex = MusicLibrary.findIndex((item) => item.id === id)
-      PlaySongList = [MusicLibrary[DataSongfindIndex]]
+      newPlaySongList = [MusicLibrary[DataSongfindIndex]]
       CurrentSong = MusicLibrary[DataSongfindIndex]
       PlaySongIndex = DataSongfindIndex
+      messageApi.open({
+        type: 'success',
+        content: '正在播放！',
+        duration: 2,
+      });
     }
     if (type == 'all') {//所有歌曲
-      PlaySongList = MusicLibrary
+      newPlaySongList = MusicLibrary
       PlaySongIndex = 0;
       CurrentSong = MusicLibrary[0]
     }
-    if (type == 'filter') {
+    if (type == 'filter') {//过滤
       PlaySongIndex = 0;
-      PlaySongList = filteredData
+      newPlaySongList = filteredData
       CurrentSong = filteredData[0]
+      messageApi.open({
+        type: 'success',
+        content: '播放成功！',
+        duration: 2,
+      });
     }
-    dispatch(changePlaySongListAction(PlaySongList))
-    dispatch(changeCurrentSongAction(CurrentSong))
-    dispatch(changePlaySongIndexAction(PlaySongIndex))
+    if (type == 'add') {//添加
+      if (playSongList.findIndex((item) => item.id === id) == -1) {
+        DataSongfindIndex = MusicLibrary.findIndex((item) => item.id === id)
+        newPlaySongList = [...playSongList].concat(MusicLibrary[DataSongfindIndex])
+      } else {
+        return false
+      }
+      messageApi.open({
+        type: 'success',
+        content: '已添加进列表！',
+        duration: 2,
+      });
+    }
+    dispatch(changePlaySongListAction(newPlaySongList))
+    if (type != 'add') {
+      dispatch(changeCurrentSongAction(CurrentSong))
+      dispatch(changePlaySongIndexAction(PlaySongIndex))
+    }
   }
 
   function handleScreenBtnClick (keyword) {//点击筛选
     setFilter(keyword);
   }
 
+  function nostop (e) {//防止冒泡
+    e.stopPropagation();
+  }
+
   const filteredData = MusicLibrary.filter((item) => item.name.includes(filter));
-
-
 
   return (
     <div className="main">
+      {contextHolder}
       <div className='main_left'>
         <div className='floor_hot'>
           <div className='n-rcmd'>
@@ -59,18 +97,21 @@ function Main () {
                 <span className="line">|</span>
                 <a className="s-fc3" onClick={() => handleScreenBtnClick('Beyond')}>Beyond</a>
               </div>
-              <span className="more" onClick={() => handleaddBtnClick('filter')}><div className="s-fc3">播放</div><i className="cor s-bg s-bg-6">&nbsp;</i></span>
+              <span className="more">
+                <div className="s-fc3" data-type="filter" onClick={handleaddBtnClick}>播放</div>
+                <i className="cor s-bg s-bg-6">&nbsp;</i>
+              </span>
             </div>
             <ul className="m-cvrlst f-cb">
               {
                 filteredData.map((item, index) => {
                   return (
                     <li key={'MusicLibrary_new' + index}>
-                      <div className="u-cover u-cover-1" onClick={() => handleaddBtnClick('once', item.id)}>
-                        <img src={item.al.picUrl}></img>
+                      <div className="u-cover u-cover-1">
+                        <img src={item.al.picUrl} data-type="add" data-id={item.id} onClick={handleaddBtnClick}></img>
                         <a title={'[精选]' + item.name} href="/playlist?id=123243715" className="msk" data-res-id="123243715" data-res-type="13" data-res-action="log" data-res-data="recommendclick|0|alg_high_quality|user-playlist"></a>
-                        <div className="bottom">
-                          <a className="icon-play f-fr" title="播放" href="#" data-res-type="13" data-res-id="123243715" data-res-action="play"></a>
+                        <div className="bottom" onClick={nostop}>
+                          <a className="icon-play f-fr" title="播放" href="#" data-res-type="13" data-res-id="123243715" data-res-action="play" data-type="once" data-id={item.id} onClick={handleaddBtnClick}></a>
                           <span className="icon-headset"></span>
                           <span className="nb">2592万</span>
                         </div>
